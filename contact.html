@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>お問い合わせ | すずのとうだい</title>
+  <style>
+    body { margin: 0; font-family: sans-serif; line-height: 1.6; background: #fff; }
+    
+    /* ---------- HEADER共通スタイル ---------- */
+    header {
+      width: 100%; background: #2832C3; color: #fff; position: relative; z-index: 2000;
+    }
+    .nav-container {
+      max-width: 1200px; margin: auto; padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-size: 1.4rem; font-weight: bold; white-space: nowrap;
+    }
+    nav ul {
+      list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; font-size: 0.95rem; align-items: center;
+    }
+    nav a { color: #fff; text-decoration: none; white-space: nowrap; }
+    
+    /* 📱 スマホ（横幅768px以下）の時の特別なヘッダー設定 */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 12px 5px;
+        justify-content: center; /* メニューを画面中央に寄せる */
+      }
+      .logo {
+        display: none; /* 左側の「すずのとうだい」の文字を完全に非表示にする */
+      }
+      nav {
+        width: 100%;
+      }
+      nav ul {
+        width: 100%;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between; /* 5つのメニューを画面横幅いっぱいに均等に並べる */
+        gap: 0;
+        font-size: 0.75rem; /* スマホでピッタリ収まる文字サイズ */
+        padding: 0 5px;
+      }
+    }
+    
+    /* ---------- DROPDOWN ---------- */
+    .dropdown { position:relative; }
+    .dropdown-content {
+      display:none; position:absolute; background:#fff; color:#000;
+      top:35px; right: 0; padding: 5px 0; min-width:160px;
+      border-radius:6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
+      .dropdown-content { top: 25px; left: 50%; transform: translateX(-50%); }
+    }
+    .dropdown-content a { display:block; padding:10px 15px; text-decoration:none; color:#000; text-align: left; }
+    .dropdown-content a:hover { background: #f0f0f0; }
+    .dropdown.active .dropdown-content { display:block; }
+    
+    /* ---------- CONTENT ---------- */
+    .container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
+    h2 { text-align: center; color: #2832C3; margin-bottom: 40px; font-size: 2rem; }
+    
+    /* お問い合わせ全体のレイアウト */
+    .contact-wrapper { display: flex; gap: 40px; flex-wrap: wrap; }
+    .contact-box { flex: 1; min-width: 300px; background: #f7f8ff; border-radius: 12px; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; }
+    
+    /* ボタンの装飾 */
+    .insta-btn {
+      display: inline-block; width: 100%; text-align: center; background: linear-gradient(135deg, #FFDC80, #F56040, #E1306C, #C13584, #833AB4);
+      color: #fff; font-weight: bold; padding: 15px; border-radius: 8px; text-decoration: none; margin-top: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: opacity 0.2s; box-sizing: border-box;
+    }
+    .insta-btn:hover { opacity: 0.9; }
+
+    .form-btn {
+      display: inline-block; width: 100%; text-align: center; background: #2832C3;
+      color: #fff; font-weight: bold; padding: 12px; border-radius: 8px; text-decoration: none; margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: background 0.2s; box-sizing: border-box;
+    }
+    .form-btn:hover { background: #1e2696; }
+    
+    /* Googleフォーム埋め込み用 */
+    .form-container { width: 100%; height: 550px; border: none; border-radius: 8px; background: #fff; flex-grow: 1; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo">すずのとうだい</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li class="dropdown" id="dropdown">
+            <a href="#" onclick="toggleDropdown(event)">活動内容 ▾</a>
+            <div class="dropdown-content">
+              <a href="silk.html">シルクスクリーン</a>
+              <a href="science.html">科学教室</a>
+              <a href="shell.html">貝殻アクセサリー</a>
+              <a href="knitting.html">編み物</a>
+            </div>
+          </li>
+          <li><a href="about.html">団体概要</a></li>
+          <li><a href="member.html">メンバー</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>お問い合わせ</h2>
+    
+    <div class="contact-wrapper">
+      <div class="contact-box" style="text-align: center; justify-content: center;">
+        <h3>Instagramから連絡する</h3>
+        <p>活動の様子なども発信しています！ご質問や、メンバー加入希望など、お気軽にDM（ダイレクトメッセージ）よりご連絡ください。</p>
+        <a href="https://ig.me/m/suzunotoudai/" target="_blank" class="insta-btn">
+          すずのとうだい 公式DMを開く ↗
+        </a>
+      </div>
+      
+      <div class="contact-box">
+        <h3>専用フォームから連絡する</h3>
+        <p>メールでのお問い合わせは、以下のフォームよりご記入ください。</p>
+        
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSedxJ9JqjR3BBLJ7_MLcKkoiay_vnrNjs-3xN_XRcuTsR8mUA/viewform?usp=dialog" target="_blank" class="form-btn">
+          Googleフォームを別画面で開く ↗
+        </a>
+
+        <iframe class="form-container" src="https://docs.google.com/forms/d/e/1FAIpQLSedxJ9JqjR3BBLJ7_MLcKkoiay_vnrNjs-3xN_XRcuTsR8mUA/viewform?usp=dialog">
+          読み込んでいます…
+        </iframe>
+      </div>
+    </div>
+  </main>
+
+  <footer style="background: #2832C3; color: #fff; text-align: center; padding: 20px; margin-top: 60px; font-size: 0.9rem;">
+    <p style="margin: 0;">&copy; 2026 すずのとうだい. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+  function toggleDropdown(e){ 
+    e.preventDefault();
+    document.getElementById("dropdown").classList.toggle("active"); 
+  }
+  </script>
+
+</body>
+</html>
