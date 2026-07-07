@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <meta name="google-site-verification" content="VC0dmZGmSV40DUxaRGW2JdDkC5CpPW29j2C5uNSr5JA" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>すずのとうだい | 金沢大学学生団体 公式サイト</title>
+  <title>すずのとうだい | 金沢大学学生団体</title>
   <style>
     :root {
       --main-color: #2832C3;
@@ -13,18 +14,15 @@
       margin: 0;
       font-family: sans-serif;
       line-height: 1.6;
-      background: #fafafa;
-      color: #333;
     }
 
-    /* ---------- HEADER ---------- */
+    /* ---------- HEADER共通スタイル ---------- */
     header {
       width: 100%;
       background: var(--main-color);
       color: #fff;
       position: relative;
-      z-index: 2000; /* スライドより前面に表示 */
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 2000; /* スライドショーより前面に配置 */
     }
 
     .nav-container {
@@ -39,25 +37,49 @@
     .logo {
       font-size: 1.4rem;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     nav ul {
       list-style: none;
       display: flex;
-      gap: 25px;
-      align-items: center;
+      gap: 20px;
       margin: 0;
       padding: 0;
+      font-size: 0.95rem;
+      align-items: center;
     }
 
     nav a {
       color: #fff;
       text-decoration: none;
-      font-size: 1rem;
-      transition: opacity 0.2s;
+      white-space: nowrap;
     }
-    nav a:hover { opacity: 0.8; }
 
+    /* 📱 スマホ（横幅768px以下）の時の特別なヘッダー設定 */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 12px 5px;
+        justify-content: center; /* メニューを画面中央に寄せる */
+      }
+      .logo {
+        display: none; /* 左側の「すずのとうだい」の文字を完全に非表示にする */
+      }
+      nav {
+        width: 100%;
+      }
+      nav ul {
+        width: 100%;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between; /* 5つのメニューを画面横幅いっぱいに均等に並べる */
+        gap: 0;
+        font-size: 0.75rem; /* スマホでピッタリ収まる文字サイズ */
+        padding: 0 5px;
+      }
+    }
+
+    /* ---------- DROPDOWN ---------- */
     .dropdown {
       position: relative;
     }
@@ -69,11 +91,14 @@
       color: #000;
       top: 35px;
       right: 0;
-      padding: 10px 0;
+      padding: 5px 0;
       min-width: 160px;
       border-radius: 6px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 3000;
+    }
+
+    @media (max-width: 768px) {
+      .dropdown-content { top: 25px; left: 50%; transform: translateX(-50%); }
     }
 
     .dropdown-content a {
@@ -92,51 +117,17 @@
       display: block;
     }
 
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background: #fff;
-    }
-
-    @media (max-width: 768px) {
-      nav ul {
-        display: none;
-        flex-direction: column;
-        background: var(--main-color);
-        position: absolute;
-        top: 55px;
-        left: 0;
-        width: 100%;
-        padding: 20px 0;
-        gap: 15px;
-      }
-      nav ul.active { display: flex; }
-      .hamburger { display: flex; }
-      .hero-container { flex-direction: column !important; text-align: center; }
-      .hero-left-image { margin-right: 0 !important; margin-bottom: 20px; flex: 0 0 auto !important; width: 180px; height: 180px; }
-      .hero-content { text-align: center !important; }
-    }
-
-    /* ----------- HERO SECTION（スライドショー背景） ----------- */
+    /* ----------- HERO SECTION ----------- */
     .hero {
       position: relative;
-      background: #222; /* 画像読み込み前の待機色 */
+      background: var(--main-color);
       color: white;
+      text-align: center;
       padding: 120px 20px;
       overflow: hidden;
-      min-height: 300px;
-      display: flex;
-      align-items: center;
+      z-index: 1;
     }
 
-    /* スライドショー画像の設定 */
     .slideshow {
       position: absolute;
       top: 0;
@@ -144,6 +135,7 @@
       width: 100%;
       height: 100%;
       z-index: 0;
+      overflow: hidden;
     }
 
     .slideshow img {
@@ -162,154 +154,95 @@
       100% { opacity: 0; transform: translateX(-40px); }
     }
 
-    /* 文字や固定画像を最前面に */
-    .hero-container {
+    .hero-content {
       position: relative;
       z-index: 2;
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      width: 100%;
-    }
-
-    /* 左側固定画像 */
-    .hero-left-image {
-      flex: 0 0 220px;
-      height: 220px;
-      margin-right: 40px;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      border: 3px solid rgba(255,255,255,0.3);
-    }
-
-    .hero-left-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .hero-content {
-      flex: 1;
-      text-align: left;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* 文字を見やすく */
     }
 
     .hero h1 {
-      font-size: 2.8rem;
-      margin: 0 0 15px 0;
-      letter-spacing: 2px;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
     }
 
     .hero p {
       font-size: 1.2rem;
-      margin: 0 0 35px 0;
-      opacity: 0.95;
+      margin-bottom: 30px;
     }
 
     .hero .btn {
+      display: inline-block;
       background: white;
       color: var(--main-color);
-      padding: 14px 30px;
-      border-radius: 30px;
+      padding: 12px 25px;
+      border-radius: 25px;
       text-decoration: none;
       font-weight: bold;
-      transition: all 0.3s;
-      display: inline-block;
     }
-    .hero .btn:hover { background: #f0f0f0; transform: scale(1.05); }
 
     /* ----------- ACTIVITIES ----------- */
     .activities {
       max-width: 1200px;
-      margin: 80px auto;
+      margin: 60px auto;
       padding: 0 20px;
     }
 
     .activities h2 {
       text-align: center;
-      margin-bottom: 50px;
-      font-size: 2.2rem;
+      margin-bottom: 40px;
+      font-size: 2rem;
       color: var(--main-color);
-      position: relative;
-      padding-bottom: 15px;
-    }
-    .activities h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 50%;
-      transform: translateX(-50%);
-      width: 60px; height: 4px;
-      background: var(--main-color);
     }
 
     .activity-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
     }
 
     .activity-card {
-      padding: 30px;
-      border-radius: 15px;
-      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      background: #f7f8ff;
       text-align: center;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-      border-top: 5px solid var(--main-color);
-      transition: transform 0.3s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
-    .activity-card:hover { transform: translateY(-10px); }
 
     .activity-card h3 {
-      margin-top: 0;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
       color: var(--main-color);
-      font-size: 1.4rem;
     }
 
     /* --------- ABOUT SECTION --------- */
     .about {
       background: #eef0ff;
-      padding: 80px 20px;
-      text-align: center;
+      padding: 60px 20px;
     }
 
     .about-container {
-      max-width: 800px;
+      max-width: 1000px;
       margin: auto;
+      text-align: center;
     }
 
     .about h2 {
       color: var(--main-color);
-      margin-bottom: 25px;
-      font-size: 2rem;
+      margin-bottom: 20px;
     }
 
     /* -------- CTA -------- */
     .cta {
       text-align: center;
-      padding: 100px 20px;
+      padding: 60px 20px;
     }
 
     .cta a {
+      display: inline-block;
       background: var(--main-color);
       color: white;
-      padding: 18px 50px;
-      border-radius: 40px;
+      padding: 15px 30px;
+      border-radius: 30px;
       text-decoration: none;
-      font-size: 1.3rem;
-      font-weight: bold;
-      transition: opacity 0.3s;
-    }
-    .cta a:hover { opacity: 0.9; }
-
-    footer {
-      text-align: center;
-      padding: 30px;
-      background: #222;
-      color: #fff;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
     }
   </style>
 </head>
@@ -319,14 +252,9 @@
   <header>
     <div class="nav-container">
       <div class="logo">すずのとうだい</div>
-
-      <div class="hamburger" onclick="toggleMenu()">
-        <div></div><div></div><div></div>
-      </div>
-
       <nav>
-        <ul id="nav-menu">
-          <li><a href="index.html">ホーム</a></li>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
           <li class="dropdown" id="dropdown">
             <a href="#" onclick="toggleDropdown(event)">活動内容 ▾</a>
             <div class="dropdown-content">
@@ -343,42 +271,23 @@
       </nav>
     </div>
   </header>
-
+  
   <section class="hero">
     <div class="slideshow" id="slideshow"></div>
-
-    <div class="hero-container">
-      <div class="hero-left-image">
-        <img src="images/fixed_photo.jpg" alt="活動風景">
-      </div>
-
-      <div class="hero-content">
-        <h1>すずのとうだい</h1>
-        <p>金沢大学の学生による地域ものづくり・ワークショップ団体</p>
-        <a href="#activities" class="btn">活動内容を見る</a>
-      </div>
+    <div class="hero-content">
+      <h1>すずのとうだい</h1>
+      <p>金沢大学の学生による地域ものづくり・ワークショップ団体</p>
+      <a href="#activities" class="btn">活動内容を見る</a>
     </div>
   </section>
 
   <section class="activities" id="activities">
     <h2>活動内容</h2>
     <div class="activity-grid">
-      <div class="activity-card">
-        <h3>シルクスクリーン</h3>
-        <p>オリジナルデザインをTシャツやバッグに。ものづくりの楽しさを伝えます。</p>
-      </div>
-      <div class="activity-card">
-        <h3>科学教室</h3>
-        <p>身の回りの不思議を体験！子どもたちの好奇心を育む実験を行います。</p>
-      </div>
-      <div class="activity-card">
-        <h3>貝殻アクセサリー</h3>
-        <p>珠洲の海岸で集めた貝殻を使って、世界に一つだけの雑貨を制作します。</p>
-      </div>
-      <div class="activity-card">
-        <h3>編み物</h3>
-        <p>毛糸を使った優しいクラフト体験。世代を超えて楽しめる場を作ります。</p>
-      </div>
+      <div class="activity-card"><h3>シルクスクリーン</h3><p>オリジナルデザイン of プリント制作。</p></div>
+      <div class="activity-card"><h3>科学教室</h3><p>子ども向けの理科実験ワークショップ。</p></div>
+      <div class="activity-card"><h3>貝殻アクセサリー</h3><p>海の素材を使ったアクセ制作。</p></div>
+      <div class="activity-card"><h3>編み物</h3><p>毛糸を使った優しいクラフト体験。</p></div>
     </div>
   </section>
 
@@ -386,9 +295,9 @@
     <div class="about-container">
       <h2>すずのとうだいとは？</h2>
       <p>
-        能登半島・珠洲市を中心に活動する金沢大学の学生団体です。
-        地域の子どもや学生を対象に、ものづくり・科学ワークショップを開催しています。  
-        クリエイティブな活動を通じて、珠洲に新しい学びと笑顔の灯をともす「灯台」になることを目指しています。
+        金沢大学を中心に活動する学生団体で、地域の子どもや学生を対象に、
+        ものづくり・科学ワークショップを開催しています。  
+        クリエイティブな活動を通じて「楽しい学びの灯台」になることを目指しています。
       </p>
     </div>
   </section>
@@ -397,32 +306,19 @@
     <a href="contact.html">お問い合わせはこちら</a>
   </section>
 
-  <footer>
-    <p>&copy; 2026 すずのとうだい All Rights Reserved.</p>
+  <footer style="background: #2832C3; color: #fff; text-align: center; padding: 20px; margin-top: 60px; font-size: 0.9rem;">
+    <p style="margin: 0;">&copy; 2026 すずのとうだい. All Rights Reserved.</p>
   </footer>
 
   <script>
-    // モバイルメニュー切り替え
-    function toggleMenu() {
-      document.getElementById("nav-menu").classList.toggle("active");
-    }
-    
-    // ドロップダウン切り替え
     function toggleDropdown(event) {
       event.preventDefault();
       document.getElementById("dropdown").classList.toggle("active");
     }
 
-    // 画面外クリックでドロップダウンを閉じる
-    window.addEventListener('click', function(e) {
-      if (!document.getElementById('dropdown').contains(e.target)) {
-        document.getElementById('dropdown').classList.remove('active');
-      }
-    });
-
-    /* --------- スライドショーの仕組み（最初から作り込んできたJS） --------- */
+    /* --------- スライドショー --------- */
     const imageFolder = "images/home/";
-    const imageCount = 10; // slide01.jpg 〜 slide10.jpg
+    const imageCount = 10;
     let index = 0;
 
     function showSlide() {
@@ -430,24 +326,17 @@
       if (!slideshow) return;
 
       const img = document.createElement("img");
-      // ファイル名を slide01.jpg, slide02.jpg ... の形式に合わせる
-      const fileName = "slide" + String(index + 1).padStart(2, "0") + ".jpg";
-      img.src = imageFolder + fileName;
+      img.src = `${imageFolder}slide${String(index + 1).padStart(2, "0")}.jpg`;
 
       slideshow.appendChild(img);
-
-      // 次のインデックスへ
       index = (index + 1) % imageCount;
 
-      // アニメーションが終わる5秒後に要素を削除してメモリを節約
       setTimeout(() => {
         img.remove();
       }, 5000);
     }
 
-    // 初回実行
     showSlide();
-    // 5秒ごとにスライドを更新
     setInterval(showSlide, 5000);
   </script>
 
