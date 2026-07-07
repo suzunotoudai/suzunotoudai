@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シルクスクリーン | すずのとうだい</title>
+  <style>
+    :root { --main-color: #2832C3; }
+    body { margin:0; font-family:sans-serif; }
+
+    /* ---------- HEADER共通スタイル ---------- */
+    header {
+      width: 100%; background: var(--main-color); color: #fff; position: relative; z-index: 2000;
+    }
+    .nav-container {
+      max-width: 1200px; margin:auto; padding:10px 20px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .logo {
+      font-size: 1.4rem; font-weight: bold; white-space: nowrap;
+    }
+    nav ul { 
+      list-style:none; display:flex; gap:20px; margin: 0; padding: 0; font-size: 0.95rem; align-items: center;
+    }
+    nav a { color:white; text-decoration:none; white-space: nowrap; }
+
+    /* 📱 スマホ（横幅768px以下）の時の特別なヘッダー設定 */
+    @media (max-width: 768px) {
+      .nav-container {
+        padding: 12px 5px;
+        justify-content: center; /* メニューを画面中央に寄せる */
+      }
+      .logo {
+        display: none; /* 左側の「すずのとうだい」の文字を完全に非表示にする */
+      }
+      nav {
+        width: 100%;
+      }
+      nav ul {
+        width: 100%;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between; /* 5つのメニューを画面横幅いっぱいに均等に並べる */
+        gap: 0;
+        font-size: 0.75rem; /* スマホでピッタリ収まる文字サイズ */
+        padding: 0 5px;
+      }
+    }
+
+    /* ---------- DROPDOWN ---------- */
+    .dropdown { position:relative; }
+    .dropdown-content {
+      display:none; position:absolute; background:#fff; color:#000;
+      top:35px; right: 0; padding: 5px 0; min-width:160px;
+      border-radius:6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    @media (max-width: 768px) {
+      .dropdown-content { top: 25px; left: 50%; transform: translateX(-50%); }
+    }
+    .dropdown-content a {
+      display:block; padding:10px 15px; text-decoration:none; color:#000; text-align: left;
+    }
+    .dropdown-content a:hover {
+      background: #f0f0f0;
+    }
+    .dropdown.active .dropdown-content { display:block; }
+
+    /* ---------- HERO WITH SLIDESHOW ---------- */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 60vh;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 1.5s ease;
+    }
+    .hero img.active { opacity: 1; }
+
+    .hero-text {
+      position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);
+      color:white; text-shadow:0 2px 6px rgba(0,0,0,0.5); text-align:center;
+      z-index: 2;
+    }
+    .hero-text h1 { font-size:2.5rem; margin-bottom:10px; }
+
+    /* ---------- CONTENT ---------- */
+    .content {
+      max-width:900px; margin:50px auto; padding:0 20px;
+      line-height:1.8; font-size:1.1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo">すずのとうだい</div>
+      <nav>
+        <ul>
+          <li><a href="index.html">HOME</a></li>
+          <li class="dropdown" id="dropdown">
+            <a href="#" onclick="toggleDropdown(event)">活動内容 ▾</a>
+            <div class="dropdown-content">
+              <a href="silk.html">シルクスクリーン</a>
+              <a href="science.html">科学教室</a>
+              <a href="shell.html">貝殻アクセサリー</a>
+              <a href="knitting.html">編み物</a>
+            </div>
+          </li>
+          <li><a href="about.html">団体概要</a></li>
+          <li><a href="member.html">メンバー</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <img src="images/silk/1.jpg" class="slide active">
+    <img src="images/silk/2.jpg" class="slide">
+    <img src="images/silk/3.jpg" class="slide">
+
+    <div class="hero-text">
+      <h1>シルクスクリーン</h1>
+      <p>オリジナルプリント制作ワークショップ</p>
+    </div>
+  </section>
+
+  <section class="content">
+    <h2>シルクスクリーンとは？</h2>
+    <p>
+      シルクスクリーンは版を使ってインクを刷る印刷技法です。
+      すずのとうだいでは、学生がデザインした図案を使って
+      Tシャツやバッグなどへプリント体験ができます。
+    </p>
+  </section>
+
+  <script>
+    function toggleDropdown(e){ 
+      e.preventDefault();
+      document.getElementById("dropdown").classList.toggle("active"); 
+    }
+
+    // スライドショーのプログラム
+    let index = 0;
+    const slides = document.querySelectorAll(".slide");
+    if (slides.length > 0) {
+      setInterval(() => {
+        slides[index].classList.remove("active");
+        index = (index + 1) % slides.length;
+        slides[index].classList.add("active");
+      }, 5000);
+    }
+  </script>
+
+</body>
+</html>
