@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>すずのとうだい | 金沢大学学生団体 公式サイト</title>
+  <style>
+    :root {
+      --main-color: #2832C3;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      line-height: 1.6;
+      background: #fafafa;
+      color: #333;
+    }
+
+    /* ---------- HEADER ---------- */
+    header {
+      width: 100%;
+      background: var(--main-color);
+      color: #fff;
+      position: relative;
+      z-index: 2000; /* スライドより前面に表示 */
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: opacity 0.2s;
+    }
+    nav a:hover { opacity: 0.8; }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #fff;
+      color: #000;
+      top: 35px;
+      right: 0;
+      padding: 10px 0;
+      min-width: 160px;
+      border-radius: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 3000;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 15px;
+      text-decoration: none;
+      color: #000;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background: #f0f0f0;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: #fff;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        background: var(--main-color);
+        position: absolute;
+        top: 55px;
+        left: 0;
+        width: 100%;
+        padding: 20px 0;
+        gap: 15px;
+      }
+      nav ul.active { display: flex; }
+      .hamburger { display: flex; }
+      .hero-container { flex-direction: column !important; text-align: center; }
+      .hero-left-image { margin-right: 0 !important; margin-bottom: 20px; flex: 0 0 auto !important; width: 180px; height: 180px; }
+      .hero-content { text-align: center !important; }
+    }
+
+    /* ----------- HERO SECTION（スライドショー背景） ----------- */
+    .hero {
+      position: relative;
+      background: #222; /* 画像読み込み前の待機色 */
+      color: white;
+      padding: 120px 20px;
+      overflow: hidden;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* スライドショー画像の設定 */
+    .slideshow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .slideshow img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      animation: slideFade 5s linear forwards;
+    }
+
+    @keyframes slideFade {
+      0%   { opacity: 0; transform: translateX(40px); }
+      20%  { opacity: 1; transform: translateX(0); }
+      80%  { opacity: 1; transform: translateX(-20px); }
+      100% { opacity: 0; transform: translateX(-40px); }
+    }
+
+    /* 文字や固定画像を最前面に */
+    .hero-container {
+      position: relative;
+      z-index: 2;
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* 左側固定画像 */
+    .hero-left-image {
+      flex: 0 0 220px;
+      height: 220px;
+      margin-right: 40px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border: 3px solid rgba(255,255,255,0.3);
+    }
+
+    .hero-left-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      flex: 1;
+      text-align: left;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* 文字を見やすく */
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin: 0 0 15px 0;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin: 0 0 35px 0;
+      opacity: 0.95;
+    }
+
+    .hero .btn {
+      background: white;
+      color: var(--main-color);
+      padding: 14px 30px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+    .hero .btn:hover { background: #f0f0f0; transform: scale(1.05); }
+
+    /* ----------- ACTIVITIES ----------- */
+    .activities {
+      max-width: 1200px;
+      margin: 80px auto;
+      padding: 0 20px;
+    }
+
+    .activities h2 {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 2.2rem;
+      color: var(--main-color);
+      position: relative;
+      padding-bottom: 15px;
+    }
+    .activities h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 60px; height: 4px;
+      background: var(--main-color);
+    }
+
+    .activity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .activity-card {
+      padding: 30px;
+      border-radius: 15px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      border-top: 5px solid var(--main-color);
+      transition: transform 0.3s;
+    }
+    .activity-card:hover { transform: translateY(-10px); }
+
+    .activity-card h3 {
+      margin-top: 0;
+      margin-bottom: 15px;
+      color: var(--main-color);
+      font-size: 1.4rem;
+    }
+
+    /* --------- ABOUT SECTION --------- */
+    .about {
+      background: #eef0ff;
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    .about-container {
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .about h2 {
+      color: var(--main-color);
+      margin-bottom: 25px;
+      font-size: 2rem;
+    }
+
+    /* -------- CTA -------- */
+    .cta {
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .cta a {
+      background: var(--main-color);
+      color: white;
+      padding: 18px 50px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 1.3rem;
+      font-weight: bold;
+      transition: opacity 0.3s;
+    }
+    .cta a:hover { opacity: 0.9; }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: #222;
+      color: #fff;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav-container">
+      <div class="logo">すずのとうだい</div>
+
+      <div class="hamburger" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+      </div>
+
+      <nav>
+        <ul id="nav-menu">
+          <li><a href="index.html">ホーム</a></li>
+          <li class="dropdown" id="dropdown">
+            <a href="#" onclick="toggleDropdown(event)">活動内容 ▾</a>
+            <div class="dropdown-content">
+              <a href="silk.html">シルクスクリーン</a>
+              <a href="science.html">科学教室</a>
+              <a href="shell.html">貝殻アクセサリー</a>
+              <a href="knitting.html">編み物</a>
+            </div>
+          </li>
+          <li><a href="about.html">団体概要</a></li>
+          <li><a href="member.html">メンバー</a></li>
+          <li><a href="contact.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="slideshow" id="slideshow"></div>
+
+    <div class="hero-container">
+      <div class="hero-left-image">
+        <img src="images/fixed_photo.jpg" alt="活動風景">
+      </div>
+
+      <div class="hero-content">
+        <h1>すずのとうだい</h1>
+        <p>金沢大学の学生による地域ものづくり・ワークショップ団体</p>
+        <a href="#activities" class="btn">活動内容を見る</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="activities" id="activities">
+    <h2>活動内容</h2>
+    <div class="activity-grid">
+      <div class="activity-card">
+        <h3>シルクスクリーン</h3>
+        <p>オリジナルデザインをTシャツやバッグに。ものづくりの楽しさを伝えます。</p>
+      </div>
+      <div class="activity-card">
+        <h3>科学教室</h3>
+        <p>身の回りの不思議を体験！子どもたちの好奇心を育む実験を行います。</p>
+      </div>
+      <div class="activity-card">
+        <h3>貝殻アクセサリー</h3>
+        <p>珠洲の海岸で集めた貝殻を使って、世界に一つだけの雑貨を制作します。</p>
+      </div>
+      <div class="activity-card">
+        <h3>編み物</h3>
+        <p>毛糸を使った優しいクラフト体験。世代を超えて楽しめる場を作ります。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-container">
+      <h2>すずのとうだいとは？</h2>
+      <p>
+        能登半島・珠洲市を中心に活動する金沢大学の学生団体です。
+        地域の子どもや学生を対象に、ものづくり・科学ワークショップを開催しています。  
+        クリエイティブな活動を通じて、珠洲に新しい学びと笑顔の灯をともす「灯台」になることを目指しています。
+      </p>
+    </div>
+  </section>
+
+  <section class="cta">
+    <a href="contact.html">お問い合わせはこちら</a>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 すずのとうだい All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // モバイルメニュー切り替え
+    function toggleMenu() {
+      document.getElementById("nav-menu").classList.toggle("active");
+    }
+    
+    // ドロップダウン切り替え
+    function toggleDropdown(event) {
+      event.preventDefault();
+      document.getElementById("dropdown").classList.toggle("active");
+    }
+
+    // 画面外クリックでドロップダウンを閉じる
+    window.addEventListener('click', function(e) {
+      if (!document.getElementById('dropdown').contains(e.target)) {
+        document.getElementById('dropdown').classList.remove('active');
+      }
+    });
+
+    /* --------- スライドショーの仕組み（最初から作り込んできたJS） --------- */
+    const imageFolder = "images/home/";
+    const imageCount = 10; // slide01.jpg 〜 slide10.jpg
+    let index = 0;
+
+    function showSlide() {
+      const slideshow = document.getElementById("slideshow");
+      if (!slideshow) return;
+
+      const img = document.createElement("img");
+      // ファイル名を slide01.jpg, slide02.jpg ... の形式に合わせる
+      const fileName = "slide" + String(index + 1).padStart(2, "0") + ".jpg";
+      img.src = imageFolder + fileName;
+
+      slideshow.appendChild(img);
+
+      // 次のインデックスへ
+      index = (index + 1) % imageCount;
+
+      // アニメーションが終わる5秒後に要素を削除してメモリを節約
+      setTimeout(() => {
+        img.remove();
+      }, 5000);
+    }
+
+    // 初回実行
+    showSlide();
+    // 5秒ごとにスライドを更新
+    setInterval(showSlide, 5000);
+  </script>
+
+</body>
+</html>
