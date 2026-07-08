@@ -5,86 +5,284 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>お問い合わせ | すずのとうだい</title>
   <style>
-    body { margin: 0; font-family: sans-serif; line-height: 1.6; background: #fff; }
-    
-    /* ---------- HEADER共通スタイル ---------- */
+    :root {
+      --blue: #2832c3;
+      --blue-dark: #1f2696;
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #1f2430;
+      --muted: #5f6472;
+      --line: #e3e7f0;
+      --soft: #f1f4ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(40, 50, 195, 0.06), transparent 30%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    }
+
+    a {
+      color: inherit;
+    }
+
     header {
-      width: 100%; background: #2832C3; color: #fff; position: relative; z-index: 2000;
+      width: 100%;
+      background: var(--blue);
+      color: #fff;
+      position: relative;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     }
+
     .nav-container {
-      max-width: 1200px; margin: auto; padding: 10px 20px;
-      display: flex; align-items: center; justify-content: space-between;
+      max-width: 1200px;
+      margin: auto;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
+
     .logo {
-      font-size: 1.4rem; font-weight: bold; white-space: nowrap;
+      font-size: 1.35rem;
+      font-weight: 700;
+      white-space: nowrap;
+      letter-spacing: 0.02em;
     }
+
     nav ul {
-      list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; font-size: 0.95rem; align-items: center;
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+      font-size: 0.95rem;
+      align-items: center;
     }
-    nav a { color: #fff; text-decoration: none; white-space: nowrap; }
-    
-    /* 📱 スマホ（横幅768px以下）の時の特別なヘッダー設定 */
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap;
+      opacity: 0.92;
+    }
+
+    nav a:hover {
+      opacity: 1;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background: #fff;
+      color: #000;
+      top: 34px;
+      right: 0;
+      padding: 6px 0;
+      min-width: 180px;
+      border-radius: 10px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 10px 14px;
+      text-decoration: none;
+      color: #111;
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .dropdown-content a:hover {
+      background: #f4f6ff;
+    }
+
+    .dropdown.active .dropdown-content {
+      display: block;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 56px auto;
+      padding: 0 20px;
+    }
+
+    .page-title {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+
+    .page-title .eyebrow {
+      display: inline-block;
+      font-size: 0.82rem;
+      letter-spacing: 0.14em;
+      color: var(--blue);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .page-title h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      color: var(--text);
+      letter-spacing: 0.02em;
+    }
+
+    .page-title p {
+      max-width: 700px;
+      margin: 14px auto 0;
+      color: var(--muted);
+    }
+
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(24, 33, 61, 0.04);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .contact-box h2,
+    .contact-box h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .contact-box p {
+      margin-top: 0;
+      margin-bottom: 18px;
+      color: var(--muted);
+    }
+
+    .contact-note {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      padding: 6px 10px;
+      margin-bottom: 14px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      text-decoration: none;
+      color: var(--blue);
+      font-weight: 700;
+      border-bottom: 1px solid rgba(40, 50, 195, 0.25);
+      padding-bottom: 3px;
+      transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .text-link:hover {
+      color: var(--blue-dark);
+      border-color: rgba(31, 38, 150, 0.55);
+      transform: translateX(2px);
+    }
+
+    .form-container {
+      width: 100%;
+      height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      flex-grow: 1;
+      margin-top: 8px;
+    }
+
+    .embed-link {
+      margin-bottom: 12px;
+    }
+
+    footer {
+      background: var(--blue);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      margin-top: 60px;
+      font-size: 0.9rem;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
     @media (max-width: 768px) {
       .nav-container {
-        padding: 12px 5px;
-        justify-content: center; /* メニューを画面中央に寄せる */
+        padding: 12px 14px;
+        justify-content: center;
       }
+
       .logo {
-        display: none; /* 左側の「すずのとうだい」の文字を完全に非表示にする */
+        display: none;
       }
+
       nav {
         width: 100%;
       }
+
       nav ul {
         width: 100%;
-        display: flex !important;
-        flex-direction: row !important;
-        justify-content: space-between; /* 5つのメニューを画面横幅いっぱいに均等に並べる */
+        justify-content: space-between;
         gap: 0;
-        font-size: 0.75rem; /* スマホでピッタリ収まる文字サイズ */
-        padding: 0 5px;
+        font-size: 0.75rem;
+      }
+
+      .dropdown-content {
+        top: 26px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+      }
+
+      .container {
+        margin: 40px auto;
+      }
+
+      .contact-wrapper {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-box {
+        padding: 22px;
+      }
+
+      .form-container {
+        height: 500px;
       }
     }
-    
-    /* ---------- DROPDOWN ---------- */
-    .dropdown { position:relative; }
-    .dropdown-content {
-      display:none; position:absolute; background:#fff; color:#000;
-      top:35px; right: 0; padding: 5px 0; min-width:160px;
-      border-radius:6px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    @media (max-width: 768px) {
-      .dropdown-content { top: 25px; left: 50%; transform: translateX(-50%); }
-    }
-    .dropdown-content a { display:block; padding:10px 15px; text-decoration:none; color:#000; text-align: left; }
-    .dropdown-content a:hover { background: #f0f0f0; }
-    .dropdown.active .dropdown-content { display:block; }
-    
-    /* ---------- CONTENT ---------- */
-    .container { max-width: 1000px; margin: 60px auto; padding: 0 20px; }
-    h2 { text-align: center; color: #2832C3; margin-bottom: 40px; font-size: 2rem; }
-    
-    /* お問い合わせ全体のレイアウト */
-    .contact-wrapper { display: flex; gap: 40px; flex-wrap: wrap; }
-    .contact-box { flex: 1; min-width: 300px; background: #f7f8ff; border-radius: 12px; padding: 30px; box-sizing: border-box; display: flex; flex-direction: column; }
-    
-    /* ボタンの装飾 */
-    .insta-btn {
-      display: inline-block; width: 100%; text-align: center; background: linear-gradient(135deg, #FFDC80, #F56040, #E1306C, #C13584, #833AB4);
-      color: #fff; font-weight: bold; padding: 15px; border-radius: 8px; text-decoration: none; margin-top: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: opacity 0.2s; box-sizing: border-box;
-    }
-    .insta-btn:hover { opacity: 0.9; }
-
-    .form-btn {
-      display: inline-block; width: 100%; text-align: center; background: #2832C3;
-      color: #fff; font-weight: bold; padding: 12px; border-radius: 8px; text-decoration: none; margin-bottom: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: background 0.2s; box-sizing: border-box;
-    }
-    .form-btn:hover { background: #1e2696; }
-    
-    /* Googleフォーム埋め込み用 */
-    .form-container { width: 100%; height: 550px; border: none; border-radius: 8px; background: #fff; flex-grow: 1; }
   </style>
 </head>
 <body>
@@ -113,41 +311,69 @@
   </header>
 
   <main class="container">
-    <h2>お問い合わせ</h2>
-    
+    <div class="page-title">
+      <div class="eyebrow">CONTACT</div>
+      <h1>お問い合わせ</h1>
+      <p>活動の見学、参加の相談、取材やご依頼など、お気軽にご連絡ください。</p>
+    </div>
+
     <div class="contact-wrapper">
-      <div class="contact-box" style="text-align: center; justify-content: center;">
-        <h3>Instagramから連絡する</h3>
-        <p>活動の様子なども発信しています！ご質問や、メンバー加入希望など、お気軽にDM（ダイレクトメッセージ）よりご連絡ください。</p>
-        <a href="https://ig.me/m/suzunotoudai/" target="_blank" class="insta-btn">
-          すずのとうだい 公式DMを開く ↗
+      <section class="contact-box">
+        <span class="contact-note">Instagram</span>
+        <h2>DMから連絡する</h2>
+        <p>
+          活動の様子やお知らせも発信しています。
+          質問やメンバー加入希望など、DMから気軽にご連絡ください。
+        </p>
+        <a href="https://ig.me/m/suzunotoudai/" target="_blank" rel="noopener noreferrer" class="text-link">
+          公式DMを開く <span aria-hidden="true">↗</span>
         </a>
-      </div>
-      
-      <div class="contact-box">
-        <h3>専用フォームから連絡する</h3>
-        <p>メールでのお問い合わせは、以下のフォームよりご記入ください。</p>
-        
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSedxJ9JqjR3BBLJ7_MLcKkoiay_vnrNjs-3xN_XRcuTsR8mUA/viewform?usp=dialog" target="_blank" class="form-btn">
-          Googleフォームを別画面で開く ↗
+      </section>
+
+      <section class="contact-box">
+        <span class="contact-note">Form</span>
+        <h2>フォームから連絡する</h2>
+        <p>
+          メールでのお問い合わせは、下のフォームから送信できます。
+          画面が小さい場合は別画面で開くのがおすすめです。
+        </p>
+
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSedxJ9JqjR3BBLJ7_MLcKkoiay_vnrNjs-3xN_XRcuTsR8mUA/viewform?usp=dialog"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-link embed-link"
+        >
+          Googleフォームを別画面で開く <span aria-hidden="true">↗</span>
         </a>
 
-        <iframe class="form-container" src="https://docs.google.com/forms/d/e/1FAIpQLSedxJ9JqjR3BBLJ7_MLcKkoiay_vnrNjs-3xN_XRcuTsR8mUA/viewform?usp=dialog">
+        <iframe
+          class="form-container"
+          src="https://docs.google.com/forms/d/e/1FAIpQLSedxJ9JqjR3BBLJ7_MLcKkoiay_vnrNjs-3xN_XRcuTsR8mUA/viewform?usp=dialog"
+          title="お問い合わせフォーム"
+        >
           読み込んでいます…
         </iframe>
-      </div>
+      </section>
     </div>
   </main>
 
-  <footer style="background: #2832C3; color: #fff; text-align: center; padding: 20px; margin-top: 60px; font-size: 0.9rem;">
-    <p style="margin: 0;">&copy; 2026 すずのとうだい. All Rights Reserved.</p>
+  <footer>
+    <p>&copy; 2026 すずのとうだい. All Rights Reserved.</p>
   </footer>
 
   <script>
-  function toggleDropdown(e){ 
-    e.preventDefault();
-    document.getElementById("dropdown").classList.toggle("active"); 
-  }
+    function toggleDropdown(e) {
+      e.preventDefault();
+      document.getElementById("dropdown").classList.toggle("active");
+    }
+
+    document.addEventListener("click", function (e) {
+      const dropdown = document.getElementById("dropdown");
+      if (dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove("active");
+      }
+    });
   </script>
 
 </body>
